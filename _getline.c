@@ -1,4 +1,9 @@
 #include "main.h"
+
+void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size);
+void assign_lineptr(char **lineptr, size_t *n, char *buffer, size_t b);
+ssize_t _getline(char **lineptr, size_t *n, FILE *stream);
+
 /**
  * _realloc - Reallocates a memory block using malloc and free.
  * @ptr: A pointer to the memory previously allocated.
@@ -102,9 +107,11 @@ ssize_t _getline(char **lineptr, size_t *n, FILE *stream)
 	else
 		return (-1);
 	input = 0;
+
 	buffer = malloc(sizeof(char) * 120);
 	if (!buffer)
 		return (-1);
+
 	while (c != '\n')
 	{
 		r = read(STDIN_FILENO, &c, 1);
@@ -118,6 +125,7 @@ ssize_t _getline(char **lineptr, size_t *n, FILE *stream)
 			input++;
 			break;
 		}
+
 		if (input >= 120)
 			buffer = _realloc(buffer, input, input + 1);
 
@@ -125,29 +133,11 @@ ssize_t _getline(char **lineptr, size_t *n, FILE *stream)
 		input++;
 	}
 	buffer[input] = '\0';
+
 	assign_lineptr(lineptr, n, buffer, input);
+
 	ret = input;
 	if (r != 0)
 		input = 0;
 	return (ret);
 }
-#include "main.h"
-#include <string.h>
-/**
- * _strcpy - checks for upper case
- * @dest: to be copied to
- * @src: to be copied from
- * * Return: pointer to dest, false otherwise
- */
-char *_strcpy(char *dest, char *src)
-{
-int i;
-int n;
-
-for (i = 0, n = (int)strlen(src); i < n + 1; i++)
-{
-dest[i] = src[i];
-}
-return (dest);
-}
-

@@ -149,16 +149,4 @@ char **replace_aliases(char **args)
 	}
 
 	return (args);
-else if (child_pid > 0)
-{
-wait(&status);
-return (1);
-}
-else
-{
-return (-1);
-/*TODO: update exit struct*/
-return (-1);
-}
-return (-1);
 }
